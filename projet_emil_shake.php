@@ -18,6 +18,8 @@
 		window.onload = function()
 		{
 			disableVerificationIcons(true,true);
+
+			populateTable();
 		}
 
 		async function emailVerifierCall(name, domain)
@@ -272,6 +274,26 @@
 			iconReceiver[0].classList.add(iconToAddReceiver);
 
 		}
+
+		function populateTable()
+		{
+			var url = "serveur.php"
+		    var xmlHttp = new XMLHttpRequest();
+		    xmlHttp.open( "GET", url, false ); // false for synchronous request
+		    xmlHttp.send(null);
+
+		    var json = JSON.parse(xmlHttp.responseText)
+		    console.log(json);
+
+		    const table = document.getElementById("testBody");
+		    json.forEach( item => {
+		      let row = table.insertRow();
+		      let date = row.insertCell(0);
+		      date.innerHTML = item.domain;
+		      let name = row.insertCell(1);
+		      name.innerHTML = item.occurrence;
+		    });
+		}
 		
 	</script>
 </head>
@@ -313,6 +335,7 @@
 			</div>
 			<div class="col-md-1"></div>
 			<div class="col-md-5">
+				<p class="h3"> Ocurrences per domain </p>
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
@@ -320,19 +343,11 @@
 							<th scope="col">occurences</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>gmail</td>
-							<td>20003</td>
-						</tr>
-						<tr>
-							<td>yahoo</td>
-							<td>12458</td>
-						</tr>
+					<tbody id="testBody">
 					</tbody>
 				</table>
 
-				<div class="col-sm mt-6">
+				<div class="col-sm mt-5">
 					<label for="text">Correction :</label>
 					<textarea class="form-control" id="textC" rows="3"></textarea>
 				</div>
