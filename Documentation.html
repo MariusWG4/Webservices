@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- css bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <title>Documentation Web sevices</title>
+    <center><h1>Emil_shake.com</h1></center>
+    <center><h2>Documentation API</h2></center>
+
+  </head>
+  <body>
+    <fieldset><h4>La 1ère API que nous avons utlisé est Email Verifier:</h4><br>
+    Cette API à pour but de vérifier l'existence du nom de domaine de l'expéditeur et de celui qui reçoit le mail.<br><br></fieldset>
+    <h4>La 2éme API que nous avons utilisé est le Grammar Bot :</h4><br>
+    Cette API à pour but de détécter puis de corriger les fautes d'orthographe présentes dans le contenu du mail.<br><br>
+    <h4>Nous proposons aux utilisateurs:</h4><br>
+    Une API qui affiche un tableau avec le nombre d'occurence des domaines les plus fréquents<br>
+    Ou la moyennes des erreurs en fonction du nom de domaines<br><br>
+<br>
+
+<h3>Documentation de notre API</h3> <br>
+
+    <h4>Voici quelques exemples d'appel:</h4><br>
+<div class="border">
+  <div class="bg-primary text-white col-md-1">APPEL : serveur.php </div><br>
+ici il n'y a pas de filtre
+-------retourne les domaines et les occurrences qui leurs correspondent<br><br><kbd>[{"domain":"gmail","occurrence":40},{"domain":"yahoo","occurrence":50}]</kbd><br><br>
+</div>
+<div class="border">
+  <div class="bg-primary text-white col-md-2">APPEL : serveur.php?domain=gmail </div><br>
+ici on filtre par domaine en précisant gmail en paramètre<br>
+ ------retourne le nombres d'erreur en fonction du nom de domaine renseigné <br><br> <kbd>{domain : gmail, occurences : 200} </kbd><br><br>
+</div>
+<div class="border">
+  <div class="bg-primary text-white col-md-2">APPEL : serveur.php?mistakes=true </div><br>
+ici le filtre va donner la moyenne d'erreurs dans tous les domaines enregistrés<br>
+ ------retourne la moyenne du nombre d'erreur de tous les domaines enregistrés <br><br><kbd>[{"domain":"gmail","averageMistakesPerMail":5}][{"domain":"yahoo","averageMistakesPerMail":6}] </kbd><br><br>
+</div>
+<div class="border">
+  <div class="bg-primary text-white col-md-3">APPEL : serveur.php?domain=gmail&mistakes=true </div><br>
+ici on filtre par domaine
+ ------retourne la moyenne du nombre d'erreur en fonction du nom de domaine renseigné<br><br> <kbd>{domain : gmail, occurences : 200, averageMistakesPerMail : 20} </kbd><br>
+</div>
+
+
+
+ 
+
+ 
+
+
+ 
+
+Declaration <br>
+<code>
+  var completeEmail = name + "@" + domain;<br>
+
+  completeEmail = encodeURIComponent(completeEmail);<br>
+
+  let response = await fetch("https://email-checker.p.rapidapi.com/verify/v1?email=" + completeEmail, {<br>
+    "method": "GET",<br>
+    "headers": {<br>
+      "x-rapidapi-key": "463a4a02abmsh984ef77b4d06200p160a31jsn324e0850e088",<br>
+      "x-rapidapi-host": "email-checker.p.rapidapi.com"<br>
+    }<br>
+  });<br>
+
+            let data = await response.json();<br>
+
+            return data;</code><br>
+<br>Appel asynchrone<br><code>
+emailVerifierCall(name,domain).then((senderData) => {<br>
+                    console.log(senderData);},<br>
+                        (raison) => {<br>
+                       console.log(raison);<br>
+                });</code><br>
+  </body>
+</html>
