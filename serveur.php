@@ -57,7 +57,7 @@ if(isset($_GET['domain']))
 	}
 }
 
-if(isset($_GET['mistakes']))
+if(isset($_GET['mistakes']) && !isset($_GET['domain']))
 {
 	$i = 0;
 	foreach ($json->domain as $JDomain)
